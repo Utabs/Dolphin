@@ -8,6 +8,7 @@ public enum Module
     SALLER(new Short("3")),
     SHOP(new Short("4"));
 
+
     private Short moduleCode;
 
     private Module(Short moduleCode) {
