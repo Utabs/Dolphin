@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import javax.validation.ConstraintViolationException;
 import java.lang.annotation.Annotation;
@@ -31,28 +32,24 @@ public class BaseDao {
 
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public InvocationContext generalCreate(ServiceContext sc, BaseStaticEntity element) throws BaseException
-    {
+    public InvocationContext generalCreate(ServiceContext sc, BaseStaticEntity element) throws BaseException {
         return generalCreate(sc, element, false);
     }
 
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public InvocationContext generalCreate(ServiceContext sc, BaseStaticEntity element, boolean flushMode) throws BaseException
-    {
+    public InvocationContext generalCreate(ServiceContext sc, BaseStaticEntity element, boolean flushMode) throws BaseException {
         int ID_TYPE = 0;
         for (Field field : element.getClass().getDeclaredFields()) {
             for (Annotation annotation : field.getDeclaredAnnotations()) {
                 if (annotation instanceof SequenceGenerator) {
                     ID_TYPE = SEQUENCE;
                     break;
-                }
-                else if (annotation instanceof GeneratedValue) {
+                } else if (annotation instanceof GeneratedValue) {
                     if (ID_TYPE < IDENTITY) {
                         ID_TYPE = IDENTITY;
                     }
-                }
-                else if (annotation instanceof Id) {
+                } else if (annotation instanceof Id) {
                     if (ID_TYPE < ID) {
                         ID_TYPE = ID;
                     }
@@ -85,8 +82,7 @@ public class BaseDao {
             if (cause instanceof SQLIntegrityConstraintViolationException) {
                 log.error("Integrity Constraint Violation occured in " + element.getClass().getName() + cause);
                 throw new BaseException(ErrorMessageConstant.DB_RECORD_NOT_INSERTED_CODE.toString(), cause, ErrorMessageConstant.DB_RECORD_NOT_INSERTED_MESSAGE, Layer.DAO, null);
-            } else
-            if (cause instanceof RollbackException) {
+            } else if (cause instanceof RollbackException) {
                 log.error("Rollback Exception occured in " + element.getClass().getName() + cause);
                 throw new BaseException(ErrorMessageConstant.DB_RECORD_NOT_INSERTED_CODE.toString(), cause, ErrorMessageConstant.DB_RECORD_NOT_INSERTED_MESSAGE, Layer.DAO, null);
             } else {
@@ -103,14 +99,14 @@ public class BaseDao {
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public InvocationContext edit(ServiceContext sc, BaseStaticEntity element) throws BaseException
-    {
+    public InvocationContext edit(ServiceContext sc, BaseStaticEntity element) throws BaseException {
+
         InvocationContext invContext = new InvocationContext();
         try {
 //            if (!isExist(em.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(element), element.getClass())) {
 //                invContext.setErrorCode(ErrorMessageConstant.DB_RECORD_NOT_FOUND_CODE);
 //            } else {
-                em.merge(element);
+            em.merge(element);
 //            }
             invContext.setErrorCode(0);
             return invContext;
@@ -119,8 +115,7 @@ public class BaseDao {
             if (cause instanceof SQLIntegrityConstraintViolationException) {
                 log.error("Integrity Constraint Violation occured in " + element.getClass().getName() + cause);
                 throw new BaseException(ErrorMessageConstant.DB_RECORD_NOT_UPDATED_CODE.toString(), cause, ErrorMessageConstant.DB_RECORD_NOT_UPDATED_MESSAGE, Layer.DAO, null);
-            } else
-            if (cause instanceof RollbackException) {
+            } else if (cause instanceof RollbackException) {
                 log.error("Rollback Exception occured in " + element.getClass().getName() + cause);
                 throw new BaseException(ErrorMessageConstant.DB_RECORD_NOT_UPDATED_CODE.toString(), cause, ErrorMessageConstant.DB_RECORD_NOT_UPDATED_MESSAGE, Layer.DAO, null);
             } else {
@@ -136,28 +131,27 @@ public class BaseDao {
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public InvocationContext remove(ServiceContext sc, BaseStaticEntity element) throws BaseException
-    {
+    public InvocationContext remove(ServiceContext sc, BaseStaticEntity element) throws BaseException {
         InvocationContext invContext = new InvocationContext();
         try {
             //todo get id from input element
-//            element = em.find(element.getClass(), em.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(element));
-//            if (element == null) {
-//                invContext.setErrorCode(ErrorMessageConstant.DB_RECORD_NOT_FOUND_CODE);
-//            } else {
+            element = em.find(element.getClass(), em.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(element));
+            if (element == null) {
+                invContext.setErrorCode(ErrorMessageConstant.DB_RECORD_NOT_FOUND_CODE);
+            } else {
                 em.remove(element);
+//            em.remove(em.contains(element) ? element : em.merge(element));
 //                clearNamedQueryCache(element.getClass());
 //                    em.refresh(element);
                 invContext.setErrorCode(0);
-//            }
+            }
             return invContext;
         } catch (PersistenceException pe) {
             Throwable cause = pe.getCause();
             if (cause instanceof SQLIntegrityConstraintViolationException) {
                 log.error("Integrity Constraint Violation occured in " + element.getClass().getName() + cause);
                 throw new BaseException(ErrorMessageConstant.DB_RECORD_NOT_DELETED_CODE.toString(), cause, ErrorMessageConstant.DB_RECORD_NOT_DELETED_MESSAGE, Layer.DAO, null);
-            } else
-            if (cause instanceof RollbackException) {
+            } else if (cause instanceof RollbackException) {
                 log.error("Rollback Exception occured in " + element.getClass().getName() + cause);
                 throw new BaseException(ErrorMessageConstant.DB_RECORD_NOT_DELETED_CODE.toString(), cause, ErrorMessageConstant.DB_RECORD_NOT_DELETED_MESSAGE, Layer.DAO, null);
             } else {
@@ -170,8 +164,7 @@ public class BaseDao {
     }
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public InvocationContext find(ServiceContext sc, Object id, Class<? extends BaseStaticEntity> clazz) throws BaseException
-    {
+    public InvocationContext find(ServiceContext sc, Object id, Class<? extends BaseStaticEntity> clazz) throws BaseException {
         InvocationContext<BaseStaticEntity> invContext = new InvocationContext<BaseStaticEntity>();
         try {
             BaseStaticEntity entity = em.find(clazz, id);
@@ -184,7 +177,6 @@ public class BaseDao {
             return invContext;
         } catch (PersistenceException pe) {
             Throwable cause = pe.getCause();
-
             log.error("Persistence Exception occured in " + clazz.getName() + cause);
             throw new BaseException(ErrorMessageConstant.DB_RECORD_NOT_FOUND_CODE.toString(), cause, ErrorMessageConstant.DB_RECORD_NOT_FOUND_MESSAGE, Layer.DAO, null);
 
@@ -255,7 +247,7 @@ public class BaseDao {
     public InvocationContext<Integer> executeNativeQuery(ServiceContext sc, String nativeQuery) throws BaseException {
         try {
             Integer resultChanges = em.createNativeQuery(nativeQuery).executeUpdate();
-            InvocationContext<Integer> invocationContext= new InvocationContext<Integer>();
+            InvocationContext<Integer> invocationContext = new InvocationContext<Integer>();
             invocationContext.setData(resultChanges);
             invocationContext.setErrorCode(0);
             return invocationContext;
@@ -323,6 +315,37 @@ public class BaseDao {
             throw new Exception(ex);
         }
     }
+
+
+    private InvocationContext execStoredProcedure(ServiceContext sc) throws Exception {
+        try {
+            StoredProcedureQuery storedProcedure = this.em.createStoredProcedureQuery("FISCAL.FATRBRV0");
+            storedProcedure.registerStoredProcedureParameter("I_BOOK_DATE", Integer.class, ParameterMode.IN);
+            storedProcedure.registerStoredProcedureParameter("I_OPRTR_BRNCH", Integer.class, ParameterMode.IN);
+            storedProcedure.registerStoredProcedureParameter("O_ERROR", Integer.class, ParameterMode.OUT);
+            storedProcedure.registerStoredProcedureParameter("O_DETAIL_COUNT", Integer.class, ParameterMode.OUT);
+            storedProcedure.registerStoredProcedureParameter("O_LEVEL", Integer.class, ParameterMode.OUT);
+            storedProcedure.setParameter("I_BOOK_DATE", 13980118);
+            storedProcedure.setParameter("I_OPRTR_BRNCH", 60);
+            storedProcedure.execute();
+            Integer O_ERROR = (Integer) storedProcedure.getOutputParameterValue("O_ERROR") == null ? 0 : (Integer) storedProcedure.getOutputParameterValue("O_ERROR");
+            Integer O_DETAIL_COUNT = (Integer) storedProcedure.getOutputParameterValue("O_DETAIL_COUNT");
+            Integer O_LEVEL = (Integer) storedProcedure.getOutputParameterValue("O_LEVEL");
+            System.out.println(O_ERROR + "----" + O_DETAIL_COUNT + "-------" + O_LEVEL);
+            return null;
+        } catch (Exception ex) {
+
+            throw new Exception(ex);
+        }
+    }
+
+
+
+
+
+
+
+
 
  /*   //@TransactionAttribute(TransactionAttributeType.MANDATORY)
     public void refresh(Class<? extends BaseStaticEntity> clazz) {
