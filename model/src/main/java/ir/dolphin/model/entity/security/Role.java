@@ -1,4 +1,4 @@
-package ir.dolphin.model.security;
+package ir.dolphin.model.entity.security;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

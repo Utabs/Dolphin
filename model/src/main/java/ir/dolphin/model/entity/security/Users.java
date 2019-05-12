@@ -1,8 +1,7 @@
-package ir.dolphin.model.security;
+package ir.dolphin.model.entity.security;
 
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,7 +16,7 @@ public class Users {
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
-        this.active = active;
+        this.enable = enable;
         this.roles = roles;
     }
 
@@ -27,7 +26,7 @@ public class Users {
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
-        this.active = active;
+        this.enable = enable;
         this.roles = roles;
     }
 
@@ -45,10 +44,10 @@ public class Users {
     private String userName;
     @Column(name = "password")
     private String password;
-    @Column(name = "enables")
-    private int active;
+    @Column(name = "enable")
+    private int enable;
 
-
+//TODO: Change ManyToMany --> OneToMany
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "USER_AUTHORITY",
@@ -105,12 +104,12 @@ public class Users {
         this.password = password;
     }
 
-    public int getActive() {
-        return active;
+    public int getEnable() {
+        return enable;
     }
 
-    public void setActive(int active) {
-        this.active = active;
+    public void setEnable(int enable) {
+        this.enable = enable;
     }
 
 

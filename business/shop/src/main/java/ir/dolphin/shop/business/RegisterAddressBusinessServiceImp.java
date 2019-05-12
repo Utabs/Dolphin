@@ -17,26 +17,24 @@ public class RegisterAddressBusinessServiceImp implements RegisterAddressBusines
     RegisterAddressComponentService registerAddressComponentService;
 
     public InvocationContext<Address> insert(ServiceContext sc, Address address)throws BaseException  {
-
-
         try {
             InvocationContext<Address> addressInvocationContext = new InvocationContext<Address>();
             InvocationContext<List<Address>> addressesInvocationContext = new InvocationContext<List<Address>>();
 
-            addressInvocationContext = registerAddressComponentService.insert(sc, address);
-
-            addressInvocationContext = registerAddressComponentService.getById(sc, new Long("9"));
+//            addressInvocationContext = registerAddressComponentService.insert(sc, address);
+//
+            addressInvocationContext = registerAddressComponentService.getById(sc, new Long("2"));
             Address address1 = addressInvocationContext.getData();
-            address1.setState("qwe");
+            address1.setState("abb");
             addressInvocationContext = registerAddressComponentService.update(sc, address1);
-
-            addressInvocationContext = registerAddressComponentService.getById(sc, new Long("3"));
-            address1 = addressInvocationContext.getData();
-            registerAddressComponentService.delete(sc, address1);
+//
+//            addressInvocationContext = registerAddressComponentService.getById(sc, new Long("8"));
+//            address1 = addressInvocationContext.getData();
+//            registerAddressComponentService.delete(sc, address1);
 
 
             addressesInvocationContext = registerAddressComponentService.getAll(sc);
-            addressesInvocationContext = registerAddressComponentService.getByState(sc, "qwe");
+//            addressesInvocationContext = registerAddressComponentService.getByState(sc, "qwe");
 
             addressInvocationContext.setData(addressesInvocationContext.getData().get(0));
             return addressInvocationContext;

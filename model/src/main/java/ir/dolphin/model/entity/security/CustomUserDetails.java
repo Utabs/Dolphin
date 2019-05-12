@@ -1,11 +1,11 @@
-package ir.dolphin.model.security;
+package ir.dolphin.model.entity.security;
+
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,12 +17,10 @@ public class CustomUserDetails extends Users implements UserDetails {
 
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         return getAuthorities()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_"+((GrantedAuthority) role).getAuthority()))
                 .collect(Collectors.toList());
-
     }
 
     public String getUsername() {

@@ -11,9 +11,6 @@ import java.io.Serializable;
 		@NamedQuery(name = "Address.findAll", query = "SELECT address FROM Address address"),
 		@NamedQuery(name = "Address.getByState", query = "SELECT address FROM Address address where address.state=:state")})
 public class Address  implements Serializable,BaseStaticEntity{
-	public Address() {
-		System.out.println("3333333333333333333333333333333333Address");
-	}
 
 	private static final long serialVersionUID = 1L;
 

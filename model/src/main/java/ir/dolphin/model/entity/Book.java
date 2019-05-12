@@ -6,9 +6,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "Book",schema = "dbo")
  public class Book implements Serializable {
-	public Book() {
-		System.out.println("3333333333333333333333333Book");
-	}
 
 	private static final long serialVersionUID = 1L;
 

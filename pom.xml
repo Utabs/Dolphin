@@ -14,6 +14,7 @@
         <module>web</module>
         <module>business</module>
         <module>base</module>
+        <module>security</module>
     </modules>
 
 
@@ -205,6 +206,30 @@
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.ryantenney.metrics</groupId>
+            <artifactId>metrics-spring</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+
+
+        <!--        Spring security-->
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.0.6.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>5.0.6.RELEASE</version>
+        </dependency>
+
+
 
     </dependencies>
 

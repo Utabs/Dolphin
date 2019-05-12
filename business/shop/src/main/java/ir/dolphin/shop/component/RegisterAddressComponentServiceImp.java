@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component("RegisterAddressComponentService")
-@Transactional(rollbackFor =RuntimeException.class,isolation = Isolation.DEFAULT,readOnly =false ,propagation = Propagation.MANDATORY,timeout = -1)
+//@Transactional(rollbackFor =RuntimeException.class,isolation = Isolation.DEFAULT,readOnly =false ,propagation = Propagation.MANDATORY,timeout = -1)
 public class RegisterAddressComponentServiceImp implements RegisterAddressComponentService{
 
     @Autowired
