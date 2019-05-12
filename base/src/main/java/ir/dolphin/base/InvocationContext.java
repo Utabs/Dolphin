@@ -13,7 +13,6 @@ public class InvocationContext<T>  {
     public InvocationContext(int errorCode, int errorStep) {
         this.errorCode = errorCode;
         this.errorStep = errorStep;
-        
     }
 
     //new String[]{"start", "end", "count"}

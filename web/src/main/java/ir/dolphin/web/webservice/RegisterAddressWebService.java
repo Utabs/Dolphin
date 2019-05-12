@@ -114,12 +114,10 @@ public class RegisterAddressWebService {
 	}
 
 */
-    @RequestMapping(value = "/persons", method = RequestMethod.POST)
+    @RequestMapping(value = "/persons", method = RequestMethod.GET)
     public String create2() {
         try {
-
             System.out.println("post");
-
             return "post---------------";
         } catch (Exception e) {
             return e.getMessage();

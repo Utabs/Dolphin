@@ -5,7 +5,7 @@ public class ErrorMessageConstant {
 
     public final static Integer APPROVED_CODE = 0;
 
-    /************************ Common ******************************************/
+    /*********************************** Common ***************************************/
     public static final Integer COMMON_GENERAL_ERROR_CODE = -1;
     public static final String COMMON_GENERAL_ERROR_MESSAGE = "common.error.general";
 
