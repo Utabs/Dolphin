@@ -1,26 +1,45 @@
 package ir.dolphin.model.entity.security;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
+
+@Entity
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id")
-    private int id;
-    @Column(name = "role")
-    private String role;
-    @Column(name = "enabled")
-    private int active;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private Long id;
 
-    public int getId() {
+    @Column(name = "Role", length = 20)
+    @NotNull
+    private String role;
+
+    @Column(name = "Enable",columnDefinition = "int default 0")
+    @NotNull
+    private Integer active;
+
+    @ManyToOne
+    private Users users;
+
+
+
+
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -32,11 +51,11 @@ public class Role {
         this.role = role;
     }
 
-    public int getActive() {
+    public Integer getActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(Integer active) {
         this.active = active;
     }
 }
