@@ -31,6 +31,12 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>ir.dolphin</groupId>
+            <artifactId>saller</artifactId>
+            <version>1.0-SNAPSHOT</version>
+         </dependency>
+
 
     </dependencies>
     <build>

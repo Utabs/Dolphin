@@ -1,10 +1,10 @@
 package ir.dolphin.model;
 
-public enum QueryName implements BaseQueryName
-{
+public enum QueryName implements BaseQueryName {
 
+
+    getSallersByNationalCode("findByNationalCode"),
     getByState("getByState");
-
 
     private String queryName;
 

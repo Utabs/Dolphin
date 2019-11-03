@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "SALLER_PROFILE", schema = "dbo")
 @NamedQueries({
-        @NamedQuery(name = "SallerProfile.findAll", query = "SELECT sallerProfile FROM SallerProfile sallerProfile")
+        @NamedQuery(name = "SallerProfile.findByNationalCode", query = "SELECT sallerProfile FROM SallerProfile sallerProfile where sallerProfile.nationalCode =:nationalCode")
 })
 
 public class SallerProfile  implements Serializable, BaseStaticEntity {
@@ -41,20 +41,16 @@ public class SallerProfile  implements Serializable, BaseStaticEntity {
      *
      * @AttributeName نام
      */
-//    @Basic(optional = false)
-//    @NotNull
-//    @Size(max = 30)
-//    @Column(name = "FIRST_NAME", length = 30, nullable = false)
+
+    @Column(name = "FIRST_NAME", columnDefinition = "nvarchar(30)", nullable = false)
     private String firstName;
 
     /**
      *
      * @AttributeName نام خانوادگی
      */
-//    @Basic(optional = false)
-//    @NotNull
-//    @Size(max = 30)
-//    @Column(name = "LAST_NAME", length = 30, nullable = false )
+
+    @Column( name = "LAST_NAME",columnDefinition = "nvarchar(30)", nullable = false  )
     private String lastName;
 
 
@@ -63,56 +59,47 @@ public class SallerProfile  implements Serializable, BaseStaticEntity {
      * @AttributeName وضعیت فعالیت
      * @AttributeType YesNo
      */
-//    @Basic(optional = false)
-//    @NotNull
-//    @Min(value = 0)
-//    @Max(value = 1)
-//    @Column(name = "ACTIVE", nullable = false)
+
+    @Column(name = "ACTIVE", nullable = false)
     private Short active;
 
     /**
      *
      * @AttributeName کدملی
      */
-//    @Basic(optional = false)
-//    @NotNull
-//    @Column(name = "NATIONAL_CODE", nullable = false)
+
+    @Column(name = "NATIONAL_CODE", nullable = false,length = 10)
     private String nationalCode;
 
     /**
      *
      * @AttributeName شماره تماس
      */
-//    @Basic(optional = false)
-//    @NotNull
-//    @Column(name = "PHONE", nullable = false)
+
     private String phone;
 
     /**
      *
      * @AttributeName شماره حساب
      */
-//    @Basic(optional = true)
-//    @Size(max = 20)
-//    @Column(name = "ACC_NUMBER", nullable = true)
+
+    @Column(name = "ACC_NUMBER", nullable = true)
     private String accountNumber;
 
     /**
      *
      * @AttributeName نام پدر
      */
-//    @Basic(optional = true)
-//    @Size(max = 30)
-//    @Column(name = "FATHER_NAME", nullable = true)
+
+    @Column(name = "FATHER_NAME",  columnDefinition = "nvarchar(30)" ,nullable = true)
     private String fatherName;
 
     /**
      *
      * @AttributeName کدپرسنلی
      */
-//    @Basic(optional = true)
-//    @Size(max = 30)
-//    @Column(name = "PERSONAL_NUMBER", nullable = true)
+
+    @Column(name = "PERSONAL_NUMBER", nullable = true)
     private Integer personalNumber;
 
 
@@ -121,21 +108,17 @@ public class SallerProfile  implements Serializable, BaseStaticEntity {
      *
      * @AttributeName مقطع تحصیلی
      */
-//    @Basic(optional = true)
-//    @Min(value = 0)
-//    @Max(value = 10)
-//    @Column(name = "SCIENCE_DEGREE", nullable = true)
+
+    @Column(name = "SCIENCE_DEGREE", nullable = true)
     private Short scienceDegree;
 
     /**
      *
      * @AttributeName شماره شناسنامه
      */
-//    @Basic(optional = true)
-//    @Size(max = 15)
-//    @Column(name = "IDENTITY_NUMBER", nullable = true)
-//    @DecimalMax("30000.00")
-    private BigDecimal identityNumber;
+
+    @Column(name = "IDENTITY_NUMBER", nullable = true)
+     private BigDecimal identityNumber;
 
 
     //ToDO تعریف جدول شهر و استان و ارتباط آن
@@ -143,11 +126,8 @@ public class SallerProfile  implements Serializable, BaseStaticEntity {
      *
      * @AttributeName محل تولد
      */
-//    @Basic(optional = false)
-//    @NotNull
-//    @Min(value = 0)
-//    @Max(value = 1)
-//    @Column(name = "BIRTHPLACE", nullable = false)
+
+    @Column(name = "BIRTHPLACE", nullable = false)
     private Short birthPlace;
 
 
@@ -155,11 +135,9 @@ public class SallerProfile  implements Serializable, BaseStaticEntity {
      *
      * @AttributeName تاریخ تولد
      */
-//    @Basic(optional = false)
-//    @NotNull
-//    @Size(max = 8,min = 8)
-//    @Column(name = "BIRTH_DATE", nullable = false)
-    private Short birthDate;
+
+    @Column(name = "BIRTH_DATE", nullable = false)
+    private Integer birthDate;
 
 
 
@@ -172,7 +150,7 @@ public class SallerProfile  implements Serializable, BaseStaticEntity {
 //    @NotNull
 //    @Min(value = 0)
 //    @Max(value = 1)
-//    @Column(name = "MARITAL_STATUS", nullable = false)
+    @Column(name = "MARITAL_STATUS", nullable = false)
     private Short maritalStatus;
 
 
@@ -313,11 +291,11 @@ public class SallerProfile  implements Serializable, BaseStaticEntity {
         this.birthPlace = birthPlace;
     }
 
-    public Short getBirthDate() {
+    public Integer getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Short birthDate) {
+    public void setBirthDate(Integer birthDate) {
         this.birthDate = birthDate;
     }
 

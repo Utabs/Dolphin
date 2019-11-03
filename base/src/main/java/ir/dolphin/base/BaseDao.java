@@ -220,7 +220,6 @@ public class BaseDao {
             Query q = em.createNamedQuery(clazz.getSimpleName() + "." + queryName.getName(), clazz);
             if (maxResult != null && maxResult != 0)
                 q.setMaxResults(maxResult);
-
             for (Map.Entry<String, Object> entry : param.entrySet()) {
                 q.setParameter(entry.getKey(), entry.getValue());
             }
