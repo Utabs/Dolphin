@@ -12,5 +12,6 @@ public interface RegisterSallerBusinessService {
     InvocationContext<SallerProfile> insert(ServiceContext sc, SallerProfile sallerProfile) throws BaseException;
     InvocationContext<List<SallerProfile>> getAllSallers(ServiceContext sc) throws BaseException;
     InvocationContext<SallerProfile> getSallerByNationalCode(ServiceContext sc, String nationalCode) throws BaseException;
-
+    InvocationContext<SallerProfile> editSallerInfo(ServiceContext sc, SallerProfile sallerProfile) throws BaseException;
+    InvocationContext<SallerProfile> delete(ServiceContext sc, SallerProfile sallerProfile) throws BaseException;
 }

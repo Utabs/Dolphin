@@ -21,7 +21,7 @@ public class RegisterSallerFacadeImp implements RegisterSallerFacade {
         } catch (BaseException e) {
             throw e;
         } catch (Exception e) {
-            throw new BaseException(null, e, e.getMessage(), Layer.FACADE, Module.SHOP);
+            throw new BaseException(null, e, e.getMessage(), Layer.FACADE, Module.SALLER);
         }
     }
 
@@ -33,7 +33,7 @@ public class RegisterSallerFacadeImp implements RegisterSallerFacade {
         } catch (BaseException e) {
             throw e;
         } catch (Exception e) {
-            throw new BaseException(null, e, e.getMessage(), Layer.FACADE, Module.SHOP);
+            throw new BaseException(null, e, e.getMessage(), Layer.FACADE, Module.SALLER);
         }
     }
 
@@ -41,12 +41,35 @@ public class RegisterSallerFacadeImp implements RegisterSallerFacade {
     public InvocationContext<SallerProfile> getSallerByNationalCode(ServiceContext sc, String nationalCode) throws BaseException {
         try {
 
-            return registerSallerBusinessService.getSallerByNationalCode(sc,nationalCode);
+            return registerSallerBusinessService.getSallerByNationalCode(sc, nationalCode);
         } catch (BaseException e) {
             throw e;
         } catch (Exception e) {
-            throw new BaseException(null, e, e.getMessage(), Layer.FACADE, Module.SHOP);
+            throw new BaseException(null, e, e.getMessage(), Layer.FACADE, Module.SALLER);
         }
+    }
+
+    @Override
+    public InvocationContext<SallerProfile> edit(ServiceContext sc, SallerProfile sallerProfile) throws BaseException {
+        try {
+            return registerSallerBusinessService.editSallerInfo(sc, sallerProfile);
+        } catch (BaseException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new BaseException(null, e.getMessage(), Layer.FACADE, Module.SALLER);
+        }
+    }
+
+    @Override
+    public InvocationContext<SallerProfile> delete(ServiceContext sc, SallerProfile sallerProfile) throws BaseException {
+        try {
+            return registerSallerBusinessService.delete(sc, sallerProfile);
+        } catch (BaseException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new BaseException(null, e.getMessage(), Layer.FACADE, Module.SALLER);
+        }
+
     }
 
 
