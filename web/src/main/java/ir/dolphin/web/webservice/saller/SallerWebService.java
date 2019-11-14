@@ -2,7 +2,9 @@ package ir.dolphin.web.webservice.saller;
 
 
 import com.google.gson.Gson;
-import ir.dolphin.base.*;
+import ir.dolphin.base.BaseException;
+import ir.dolphin.base.InvocationContext;
+import ir.dolphin.base.ServiceContext;
 import ir.dolphin.model.entity.saller.SallerProfile;
 import ir.dolphin.saller.facade.RegisterSallerFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/saller")
-public class RegisterSallerWebService {
+public class  SallerWebService {
     @Autowired
     RegisterSallerFacade registerSallerFacade;
 
@@ -32,7 +34,43 @@ public class RegisterSallerWebService {
         }
     }
 
-    @RequestMapping(value = "/getallsaller", method = RequestMethod.POST)
+    @RequestMapping(value = "/deletesaller", method = RequestMethod.POST)
+    @ResponseBody
+    public InvocationContext<SallerProfile> deleteSaler( @RequestBody  SallerProfile sallerProfile) {
+        try {
+            ServiceContext sc = new ServiceContext();
+            Gson gson = new Gson();
+            InvocationContext<SallerProfile> addressInvocationContext = registerSallerFacade.delete(sc, sallerProfile);
+
+            return addressInvocationContext;
+        } catch (BaseException e) {
+            return  null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    @RequestMapping(value = "/editSaller", method = RequestMethod.POST)
+    @ResponseBody
+    public InvocationContext<SallerProfile> editSaller( @RequestBody  SallerProfile sallerProfile) {
+        try {
+            ServiceContext sc = new ServiceContext();
+            Gson gson = new Gson();
+            InvocationContext<SallerProfile> addressInvocationContext = registerSallerFacade.edit(sc, sallerProfile);
+
+            return addressInvocationContext;
+        } catch (BaseException e) {
+            return  null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+
+
+    @RequestMapping(value = "/getallsaller", method = RequestMethod.GET)
     @ResponseBody
     public InvocationContext<List<SallerProfile>> getAllSaller() {
         try {
@@ -47,7 +85,7 @@ public class RegisterSallerWebService {
             return null;
         }
     }
-    @RequestMapping(value = "/getsallerbynationalcod", method = RequestMethod.POST)
+    @RequestMapping(value = "/getsallerbynationalcod", method = RequestMethod.GET)
     @ResponseBody
     public InvocationContext<SallerProfile> getSaller(
             @RequestParam(value = "nationalCode", required = true) String nationalCode
@@ -56,7 +94,6 @@ public class RegisterSallerWebService {
             ServiceContext sc = new ServiceContext();
             Gson gson = new Gson();
             InvocationContext<SallerProfile> sallerProfileInvocationContext = registerSallerFacade.getSallerByNationalCode(sc, nationalCode);
-
             return sallerProfileInvocationContext;
         } catch (BaseException e) {
             return  null;
