@@ -15,7 +15,7 @@
         <module>shop</module>
         <module>customer</module>
         <module>asset</module>
-        <module>saller</module>
+        <module>employee</module>
     </modules>
 
 

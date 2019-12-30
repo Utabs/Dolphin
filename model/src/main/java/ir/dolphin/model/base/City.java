@@ -18,7 +18,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * @EntityName شهرها
@@ -28,7 +27,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "CITY", schema = "dbo")
 @NamedQueries({
-        @NamedQuery(name = "SallerProfile.findAll", query = "SELECT sallerProfile FROM SallerProfile sallerProfile")
+        @NamedQuery(name = "findAll", query = "SELECT sallerProfile FROM SallerProfile sallerProfile")
 })
 
 public class City implements Serializable, BaseStaticEntity {

@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "PROVINCE", schema = "dbo")
 @NamedQueries({
-        @NamedQuery(name = "SallerProfile.findAll", query = "SELECT sallerProfile FROM SallerProfile sallerProfile")
+        @NamedQuery(name = "Sale.findAll", query = "SELECT sallerProfile FROM Profile sallerProfile")
 })
 public class Province implements Serializable, BaseStaticEntity {
 

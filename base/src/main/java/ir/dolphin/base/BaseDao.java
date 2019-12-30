@@ -270,38 +270,38 @@ public class BaseDao {
         }
     }
 
-//
-//    //@TransactionAttribute(TransactionAttributeType.MANDATORY)
-//    public InvocationContext executeQuery(Class<? extends BaseStaticEntity> clazz, Map<String, Object> param, BaseQueryName queryName) throws BaseException {
-//        InvocationContext invContext = new InvocationContext();
-//        try {
-//            Query q = em.createNamedQuery(clazz.getSimpleName() + "." + queryName.getName(), clazz);
-////            q.setFlushMode(FlushModeType.AUTO);
-//            for (Map.Entry<String, Object> entry : param.entrySet()) {
-//                q.setParameter(entry.getKey(), entry.getValue());
-//            }
-//            int count = q.executeUpdate();
-//            invContext.setData(count);
-//            invContext.setErrorCode(0);
-////            em.flush();
+
+    //@TransactionAttribute(TransactionAttributeType.MANDATORY)
+    public InvocationContext executeQuery(Class<? extends BaseStaticEntity> clazz, Map<String, Object> param, BaseQueryName queryName) throws BaseException {
+        InvocationContext invContext = new InvocationContext();
+        try {
+            Query q = em.createNamedQuery(clazz.getSimpleName() + "." + queryName.getName(), clazz);
+//            q.setFlushMode(FlushModeType.AUTO);
+            for (Map.Entry<String, Object> entry : param.entrySet()) {
+                q.setParameter(entry.getKey(), entry.getValue());
+            }
+            int count = q.executeUpdate();
+            invContext.setData(count);
+            invContext.setErrorCode(0);
+//            em.flush();
 //            refresh(clazz);
-//            return invContext;
-//        } catch (PersistenceException pe) {
-//            Throwable cause = pe.getCause();
-//            /*if (cause instanceof SQLIntegrityConstraintViolationException) {
-//                log.error("Integrity Constraint Violation occured in " + clazz.getName() + cause);
-//                throw new BaseException(ErrorMessageConstant.DB_NOT_SUCCESSFULL_QUERY_CODE.toString(), cause);
-//            } else */if (cause instanceof RollbackException) {
-//                log.error("Rollback Exception occured in " + clazz.getName() + cause);
-//                throw new BaseException(ErrorMessageConstant.DB_NOT_SUCCESSFULL_QUERY_CODE.toString(), cause);
-//            } else {
-//                log.error("Persistence Exception occured in " + clazz.getName() + cause);
-//                throw new BaseException(ErrorMessageConstant.DB_NOT_SUCCESSFULL_QUERY_CODE.toString(), cause);
-//            }
-//        } catch (Exception ex) {
-//            throw new BaseException(ErrorMessageConstant.DB_NOT_SUCCESSFULL_QUERY_CODE.toString(), ex);
-//        }
-//    }
+            return invContext;
+        } catch (PersistenceException pe) {
+            Throwable cause = pe.getCause();
+            /*if (cause instanceof SQLIntegrityConstraintViolationException) {
+                log.error("Integrity Constraint Violation occured in " + clazz.getName() + cause);
+                throw new BaseException(ErrorMessageConstant.DB_NOT_SUCCESSFULL_QUERY_CODE.toString(), cause);
+            } else */if (cause instanceof RollbackException) {
+                log.error("Rollback Exception occured in " + clazz.getName() + cause);
+                throw new BaseException(ErrorMessageConstant.DB_NOT_SUCCESSFULL_QUERY_CODE.toString(), cause, ErrorMessageConstant.DB_RECORD_NOT_INSERTED_MESSAGE, Layer.DAO, null);
+            } else {
+                log.error("Persistence Exception occured in " + clazz.getName() + cause);
+                throw new BaseException(ErrorMessageConstant.DB_NOT_SUCCESSFULL_QUERY_CODE.toString(), cause, ErrorMessageConstant.DB_RECORD_NOT_INSERTED_MESSAGE, Layer.DAO, null);
+            }
+        } catch (Exception ex) {
+            throw new BaseException(ErrorMessageConstant.DB_NOT_SUCCESSFULL_QUERY_CODE.toString(), ex, ErrorMessageConstant.DB_RECORD_NOT_INSERTED_MESSAGE, Layer.DAO, null);
+        }
+    }
 
     private boolean isExist(ServiceContext sc, Object id, Class<? extends BaseStaticEntity> clazz) throws Exception {
         try {
